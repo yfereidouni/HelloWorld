@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world - Updated to new version!
+- script: echo Hello, world - Updated to new version 1.0!
   displayName: 'Run a one-line script'
 
 - script: |
