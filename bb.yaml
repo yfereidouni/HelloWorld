@@ -45,14 +45,3 @@ spec:
     app: hello-world-asp-net-core
   sessionAffinity: None
   type: LoadBalancer
-
-# spec:
-#   type: NodePort
-#   selector:
-#     app: hello-world-asp-net-core
-#     sessionAffinity: None
-#     type: LoadBalancer
-#   ports:
-#   - port: 80
-#     targetPort: 5000
-#     nodePort: 30000
