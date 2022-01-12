@@ -1,0 +1,69 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+# Stages >> Jobs >> Jobs (Steps)
+
+stages:
+- stage: Build
+  variables:
+   environment: Build
+  jobs:
+  - job: Job_01
+    steps:
+    - script: echo $(environment) Job_01!
+    - script: echo $(Build.BuildNumver)
+    - script: echo $(Build.BuildId)
+    - script: echo $(Build.SourceBranchName)
+    - script: echo $(Build.SourceDirectory)
+    - script: echo $(System.DefaultWorkingDirectory)
+    - script: echo ls -R $(System.DefaultWorkingDirectory)
+    - script: echo $(Build.ArtifactStagingDirectory)
+  - job: Job_02
+    steps:
+    - script: echo $(environment) Job_02!
+  
+- stage: Development
+  dependsOn: Build
+  variables:
+    environment: Quality
+  jobs:
+  - job: Job_01
+    steps:
+    - script: echo $(environment) Server Job_01!
+  - job: Job_02
+    steps:
+    - script: echo $(environment) Server Job_02!
+
+- stage: Quality
+  dependsOn: Build  
+  variables:
+    environment: Quality
+  jobs:
+  - job: Job_01
+    steps:
+    - script: echo $(environment) Server Job_01!
+  - job: Job_02
+    steps:
+    - script: echo $(environment) Server Job_02!
+
+- stage: Production
+  dependsOn: 
+  - Development
+  - Quality
+  variables:
+    environment: Production
+  jobs:
+  - job: Job_01
+    steps:
+    - script: echo $(environment) Server Job_01!
+  - job: Job_02
+    steps:
+    - script: echo $(environment) Server Job_02!
