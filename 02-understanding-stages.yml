@@ -26,7 +26,6 @@ stages:
     - script: echo $(System.DefaultWorkingDirectory)
     - script: echo ls -R $(System.DefaultWorkingDirectory)
     - script: echo $(Build.ArtifactStagingDirectory)
-
   - job: Job-02
     steps:
     - script: echo $(environment) Job-02!
@@ -39,7 +38,7 @@ stages:
   - job: Job-01
     steps:
     - script: echo $(environment) Server Job-1!
-  - job: secondjob
+  - job: Job-02
     steps:
     - script: echo $(environment) Server Job-2!
 
@@ -47,24 +46,24 @@ stages:
   dependsOn: Development  
   variables:
     environment: Quality
-    jobs:
-    - job: Job-01
-      steps:
-      - script: echo $(environment) Server Job-01!
-    - job: Job-02
-      steps:
-      - script: echo $(environment) Server Job-02!
+  jobs:
+  - job: Job-01
+    steps:
+    - script: echo $(environment) Server Job-01!
+  - job: Job-02
+    steps:
+    - script: echo $(environment) Server Job-02!
 
-- stage: ProductionDeploy
+- stage: Production
   dependsOn: 
   - Development
   - Quality
   variables:
     environment: Production
-    jobs:
-    - job: Job-01
-      steps:
-      - script: echo $(environment) Server Job-01!
-    - job: Job-02
-      steps:
-      - script: echo $(environment) Server Job-02!
+  jobs:
+  - job: Job-01
+    steps:
+    - script: echo $(environment) Server Job-01!
+  - job: Job-02
+    steps:
+    - script: echo $(environment) Server Job-02!
