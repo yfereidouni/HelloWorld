@@ -31,7 +31,6 @@ stages:
     - script: echo $(environment) Job_02!
   
 - stage: Development
-  dependsOn: Build
   variables:
     environment: Quality
   jobs:
@@ -42,8 +41,7 @@ stages:
     steps:
     - script: echo $(environment) Server Job_02!
 
-- stage: Quality
-  dependsOn: Build  
+- stage: Quality 
   variables:
     environment: Quality
   jobs:
@@ -55,9 +53,6 @@ stages:
     - script: echo $(environment) Server Job_02!
 
 - stage: Production
-  dependsOn: 
-  - Development
-  - Quality
   variables:
     environment: Production
   jobs:
