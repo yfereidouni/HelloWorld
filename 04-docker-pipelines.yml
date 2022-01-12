@@ -15,19 +15,19 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
-  displayName: Build docker image
-  jobs:
-  - job: Build
-    displayName: Build
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        containerRegistry: 'yhub'
-        repository: 'yhub/hello-world-asp-net-core'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+# - stage: Build
+#   displayName: Build docker image
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     steps:
+#     - task: Docker@2
+#       displayName: Build an image
+#       inputs:
+#         containerRegistry: 'yhub'
+#         repository: 'yhub/hello-world-asp-net-core'
+#         command: 'buildAndPush'
+#         Dockerfile: '**/Dockerfile'
 
 - stage: Run
   displayName: Run docker image
@@ -41,7 +41,8 @@ stages:
         namespace: 'spec.serviceAccountName'
         command: 'apply'
         useConfigurationFile: true
-        configuration: '$(Build.SourceDirectory)/bb.yml'
+        # configuration: '$(Build.SourceDirectory)/bb.yml'
+        configuration: $(System.DefaultWorkingDirectory)/bb.yml
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
         useConfigMapFile: true
