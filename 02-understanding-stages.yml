@@ -12,9 +12,9 @@ pool:
 # Stages >> Jobs >> Jobs (Steps)
 
 stages:
-- stage: Development
+- stage: Build
   variables:
-   environment: Development
+   environment: Build
   jobs:
   - job: Job-01
     steps:
@@ -30,8 +30,8 @@ stages:
     steps:
     - script: echo $(environment) Job-02!
   
-- stage: Quality
-  dependsOn: Development
+- stage: Development
+  dependsOn: Build
   variables:
     environment: Quality
   jobs:
@@ -43,7 +43,7 @@ stages:
     - script: echo $(environment) Server Job-2!
 
 - stage: Quality
-  dependsOn: Development  
+  dependsOn: Build  
   variables:
     environment: Quality
   jobs:
