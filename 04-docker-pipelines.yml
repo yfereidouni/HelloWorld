@@ -29,8 +29,11 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
 
-  - job: Push
-    displayName: Apply docker image
+- stage: Run
+  displayName: Run docker image
+  jobs:
+  - job: Apply
+    displayName: Apply kubectl bb.yml
     steps:
     - task: Kubernetes@1
       inputs:
