@@ -19,7 +19,7 @@ stages:
   - job: Job_01
     steps:
     - script: echo $(environment) Job_01!
-    - script: echo $(Build.BuildNumver)
+    - script: echo $(Build.BuildNumber)
     - script: echo $(Build.BuildId)
     - script: echo $(Build.SourceBranchName)
     - script: echo $(Build.SourceDirectory)
