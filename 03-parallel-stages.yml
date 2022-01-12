@@ -67,3 +67,6 @@ stages:
   - job: Job_02
     steps:
     - script: echo $(environment) Server Job_02!
+  - job: Job_03
+    steps:
+    - script: echo $(environment) Server Job_03!
