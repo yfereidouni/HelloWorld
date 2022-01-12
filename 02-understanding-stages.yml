@@ -16,9 +16,9 @@ stages:
   variables:
    environment: Build
   jobs:
-  - job: Job-01
+  - job: Job_01
     steps:
-    - script: echo $(environment) Job-01!
+    - script: echo $(environment) Job_01!
     - script: echo $(Build.BuildNumver)
     - script: echo $(Build.BuildId)
     - script: echo $(Build.SourceBranchName)
@@ -26,9 +26,9 @@ stages:
     - script: echo $(System.DefaultWorkingDirectory)
     - script: echo ls -R $(System.DefaultWorkingDirectory)
     - script: echo $(Build.ArtifactStagingDirectory)
-  - job: Job-02
+  - job: Job_02
     steps:
-    - script: echo $(environment) Job-02!
+    - script: echo $(environment) Job_02!
   
 - stage: Development
   dependsOn: Build
