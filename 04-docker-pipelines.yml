@@ -5,6 +5,9 @@
 trigger:
 - master
 
+pool:
+  vmImage: ubuntu-latest
+
 resources:
 - repo: self
 
@@ -13,18 +16,30 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build image
+  displayName: Build docker image
   jobs:
   - job: Build
     displayName: Build
-    pool:
-      vmImage: ubuntu-latest
     steps:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        containerRegistry: 'yhub-docker'
+        containerRegistry: 'yhub'
         repository: 'yhub/hello-world-asp-net-core'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
 
+  - job: Push
+    displayName: Apply docker image
+    steps:
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'None'
+        namespace: 'spec.serviceAccountName'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: '$(Build.SourceDirectory)/bb.yml'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
+        useConfigMapFile: true
+        configMapFile: 'bb.yml'
