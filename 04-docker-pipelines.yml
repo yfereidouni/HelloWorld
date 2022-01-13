@@ -47,8 +47,19 @@ stages:
       inputs:
         containerRegistry: 'yhub'
         command: 'login'
-    - task: Docker@2
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'yhub'
+    #     command: 'start'
+    #     container: 'yhub/hello-world-asp-net-core'
+    - task: Kubernetes@1
       inputs:
-        containerRegistry: 'yhub'
-        command: 'start'
-        container: 'yhub/hello-world-asp-net-core'
+        connectionType: 'None'
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: '$(Build.SourceDirectory)/bb.yml'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Container Registry'
+        dockerRegistryEndpoint: 'yhub'
+        secretName: 'my-secret'
