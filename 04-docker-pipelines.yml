@@ -48,6 +48,18 @@ stages:
     #     useConfigMapFile: true
     #     configMapFile: 'bb.yml'
 
+    # - task: Kubernetes@1
+    #   inputs:
+    #     connectionType: 'None'
+    #     namespace: 'default'
+    #     command: 'create'
+    #     useConfigurationFile: true
+    #     configurationType: 'inline'
+    #     inline: 'kubectl create deployment hello-world-asp-net-core hello-world-asp-net-core=yhub/hello-world-asp-net-core:$(Build.BuildId)'
+    #     secretType: 'dockerRegistry'
+    #     containerRegistryType: 'Container Registry'
+    #     dockerRegistryEndpoint: 'yhub'
+
     - task: Kubernetes@1
       inputs:
         connectionType: 'None'
@@ -55,7 +67,10 @@ stages:
         command: 'create'
         useConfigurationFile: true
         configurationType: 'inline'
-        inline: 'kubectl create deployment hello-world-asp-net-core hello-world-asp-net-core=yhub/hello-world-asp-net-core:$(Build.BuildId)'
+        inline: |
+          kubectl create deployment hello-world-asp-net-core --image=yhub/hello-world-asp-net-core:116 
+          kubectl expose deployment hello-world-asp-net-core --type=LoadBalancer --port=5000 --target-port=80
         secretType: 'dockerRegistry'
         containerRegistryType: 'Container Registry'
         dockerRegistryEndpoint: 'yhub'
+
