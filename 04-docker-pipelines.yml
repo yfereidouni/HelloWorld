@@ -68,7 +68,10 @@ stages:
         useConfigurationFile: true
         configurationType: 'inline'
         inline: 'kubectl create deployment hello-world-asp-net-core --image=yhub/hello-world-asp-net-core:116'
-        secretType: 'generic'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Container Registry'
+        dockerRegistryEndpoint: 'yhub'
+        secretName: 'my-secret'
         forceUpdate: false
 
     - task: Kubernetes@1
@@ -79,6 +82,8 @@ stages:
         useConfigurationFile: true
         configurationType: 'inline'
         inline: 'kubectl expose deployment hello-world-asp-net-core --type=LoadBalancer --port=5000 --target-port=80'
-        secretType: 'generic'
-        secretName: 'Develop2011~'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Container Registry'
+        dockerRegistryEndpoint: 'yhub'
+        secretName: 'my-secret'
         forceUpdate: false
