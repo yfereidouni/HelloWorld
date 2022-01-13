@@ -51,7 +51,7 @@ stages:
     - task: Kubernetes@1
       inputs:
         connectionType: 'None'
-        namespace: 'spec.serviceAccountName'
+        namespace: 'default'
         command: 'create'
         useConfigurationFile: true
         configurationType: 'inline'
