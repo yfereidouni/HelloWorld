@@ -47,4 +47,4 @@ stages:
       inputs:
         containerRegistry: 'yhub'
         command: 'start'
-        container: 'yhub/hello-world-aspnet-core:116'
+        container: 'yhub/hello-world-asp-net-core:$(Build.BuildId)'
