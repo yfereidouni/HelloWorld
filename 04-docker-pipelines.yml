@@ -15,29 +15,36 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-# - stage: BUILD
-#   displayName: Build docker image
-#   jobs:
-#   - job: Build
-#     displayName: Build
-#     steps:
-#     - task: Docker@2
-#       displayName: Build an image
-#       inputs:
-#         containerRegistry: 'yhub'
-#         repository: 'yhub/hello-world-asp-net-core'
-#         command: 'buildAndPush'
-#         Dockerfile: '**/Dockerfile'
-
-- stage: RUN
-  displayName: RUN docker image
+- stage: BUILD
+  displayName: Build docker image
   jobs:
+  - job: Login
+    displayName: Login
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'yhub'
+        command: 'login'
+
   - job: Build
     displayName: Build
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build docker image
+      inputs:
+        containerRegistry: 'yhub'
+        repository: 'yhub/hello-world-asp-net-core'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+
+- stage: RUN
+  displayName: Run docker image
+  jobs:
+  - job: Login
+    displayName: Login
+    steps:
+    - task: Docker@2
       inputs:
         containerRegistry: 'yhub'
         command: 'start'
-        arguments: 'yhub/hello-world-asp-net-core:116'
+        container: 'yhub/hello-world-aspnet-core:116'
