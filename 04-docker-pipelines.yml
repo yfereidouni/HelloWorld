@@ -52,4 +52,4 @@ stages:
       inputs:
         containerRegistry: 'yhub'
         command: 'start'
-        container: 'hello-world-asp-net-core'
+        container: 'yhub/hello-world-asp-net-core'
