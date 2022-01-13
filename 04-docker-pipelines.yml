@@ -35,15 +35,27 @@ stages:
   - job: Apply
     displayName: Apply kubectl bb.yml
     steps:
+    # - task: Kubernetes@1
+    #   inputs:
+    #     connectionType: 'None'
+    #     namespace: 'spec.serviceAccountName'
+    #     command: 'apply'
+    #     useConfigurationFile: true
+    #     # configuration: '$(Build.SourceDirectory)/bb.yml'
+    #     configuration: $(System.DefaultWorkingDirectory)/bb.yml
+    #     secretType: 'dockerRegistry'
+    #     containerRegistryType: 'Azure Container Registry'
+    #     useConfigMapFile: true
+    #     configMapFile: 'bb.yml'
+
     - task: Kubernetes@1
       inputs:
         connectionType: 'None'
         namespace: 'spec.serviceAccountName'
-        command: 'apply'
+        command: 'create'
         useConfigurationFile: true
-        # configuration: '$(Build.SourceDirectory)/bb.yml'
-        configuration: $(System.DefaultWorkingDirectory)/bb.yml
+        configurationType: 'inline'
+        inline: 'kubectl create deployment hello-world-asp-net-core hello-world-asp-net-core=yhub/hello-world-asp-net-core:$(Build.BuildId)'
         secretType: 'dockerRegistry'
-        containerRegistryType: 'Azure Container Registry'
-        useConfigMapFile: true
-        configMapFile: 'bb.yml'
+        containerRegistryType: 'Container Registry'
+        dockerRegistryEndpoint: 'yhub'
