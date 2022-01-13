@@ -40,11 +40,11 @@ stages:
 - stage: RUN
   displayName: Run docker image
   jobs:
-  - job: Login
-    displayName: Login
+  - job: run
+    displayName: run
     steps:
     - task: Docker@2
       inputs:
         containerRegistry: 'yhub'
         command: 'start'
-        container: 'yhub/hello-world-asp-net-core:$(Build.BuildId)'
+        container: 'yhub/hello-world-asp-net-core'
