@@ -15,7 +15,7 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-# - stage: Build
+# - stage: BUILD
 #   displayName: Build docker image
 #   jobs:
 #   - job: Build
@@ -29,73 +29,15 @@ stages:
 #         command: 'buildAndPush'
 #         Dockerfile: '**/Dockerfile'
 
-- stage: Run
-  displayName: Run docker image
+- stage: RUN
+  displayName: RUN docker image
   jobs:
-  - job: Apply
-    displayName: Apply kubectl bb.yml
+  - job: Build
+    displayName: Build
     steps:
-    # - task: Kubernetes@1
-    #   inputs:
-    #     connectionType: 'None'
-    #     namespace: 'spec.serviceAccountName'
-    #     command: 'apply'
-    #     useConfigurationFile: true
-    #     # configuration: '$(Build.SourceDirectory)/bb.yml'
-    #     configuration: $(System.DefaultWorkingDirectory)/bb.yml
-    #     secretType: 'dockerRegistry'
-    #     containerRegistryType: 'Azure Container Registry'
-    #     useConfigMapFile: true
-    #     configMapFile: 'bb.yml'
-
-    # - task: Kubernetes@1
-    #   inputs:
-    #     connectionType: 'None'
-    #     namespace: 'default'
-    #     command: 'create'
-    #     useConfigurationFile: true
-    #     configurationType: 'inline'
-    #     inline: 'kubectl create deployment hello-world-asp-net-core hello-world-asp-net-core=yhub/hello-world-asp-net-core:$(Build.BuildId)'
-    #     secretType: 'dockerRegistry'
-    #     containerRegistryType: 'Container Registry'
-    #     dockerRegistryEndpoint: 'yhub'
-
-    # - task: Kubernetes@1
-    #   inputs:
-    #     connectionType: 'None'
-    #     namespace: 'default'
-    #     command: 'create'
-    #     useConfigurationFile: true
-    #     configurationType: 'inline'
-    #     inline: 'kubectl create deployment hello-world-asp-net-core --image=yhub/hello-world-asp-net-core:116'
-    #     secretType: 'dockerRegistry'
-    #     containerRegistryType: 'Container Registry'
-    #     dockerRegistryEndpoint: 'yhub'
-    #     secretName: 'my-secret'
-    #     forceUpdate: false
-
-    - task: Kubernetes@1
+    - task: Docker@2
+      displayName: Build an image
       inputs:
-        connectionType: 'None'
-        namespace: 'default'
-        command: 'expose'
-        useConfigurationFile: true
-        configurationType: 'inline'
-        inline: 'kubectl expose deployment hello-world-asp-net-core --type=LoadBalancer --port=5000 --target-port=80'
-        secretType: 'dockerRegistry'
-        containerRegistryType: 'Container Registry'
-        dockerRegistryEndpoint: 'yhub'
-        secretName: 'my-secret'
-        forceUpdate: false
-
-    - task: Kubernetes@1
-      inputs:
-        connectionType: 'None'
-        command: 'create'
-        useConfigurationFile: true
-        configurationType: 'inline'
-        inline: 'kubectl create deployment hello-world-asp-net-core --image=yhub/hello-world-asp-net-core:116'
-        secretType: 'dockerRegistry'
-        containerRegistryType: 'Container Registry'
-        dockerRegistryEndpoint: 'yhub'
-        secretName: 'my-secret'
+        containerRegistry: 'yhub'
+        command: 'start'
+        arguments: 'yhub/hello-world-asp-net-core:116'
