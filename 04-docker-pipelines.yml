@@ -63,7 +63,7 @@ stages:
     - task: Kubernetes@1
       inputs:
         connectionType: 'None'
-        namespace: 'default'
+        namespace: 'spec.serviceAccountName'
         command: 'create'
         useConfigurationFile: true
         configurationType: 'inline'
@@ -74,4 +74,5 @@ stages:
         containerRegistryType: 'Container Registry'
         dockerRegistryEndpoint: 'yhub'
         secretName: 'Develop2011~'
+        workingDirectory: 
 
