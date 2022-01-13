@@ -73,4 +73,5 @@ stages:
         secretType: 'dockerRegistry'
         containerRegistryType: 'Container Registry'
         dockerRegistryEndpoint: 'yhub'
+        secretName: 'Develop2011~'
 
