@@ -25,6 +25,12 @@ steps:
 - script: echo $(Build.ArtifactStagingDirectory)
 # - script: dotnet build --project ./HelloWorld.csproj --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: 
+    vsVersion: '6.0'
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
