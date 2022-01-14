@@ -9,8 +9,9 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
+variables: 
   buildConfiguration: 'Release'
+  folder: '/home/vsts/work/1/s/HelloWorld/HelloWorld.csproj'
 
 steps:
 # - script: dotnet build --project 'yfereidouni/helloworld' --configuration $(buildConfiguration)
@@ -24,7 +25,7 @@ steps:
 - script: echo ls -R $(System.DefaultWorkingDirectory)
 - script: echo $(Build.ArtifactStagingDirectory)
 
-- script: dotnet build --project /home/vsts/work/1/s/HelloWorld/HelloWorld.csproj --configuration $(buildConfiguration)
+- script: dotnet build --project $(folder) --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
 # - task: UseDotNet@2
