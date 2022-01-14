@@ -13,7 +13,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --project $(Build.SourcesDirectory) --configuration=$(buildConfiguration)
+- script: dotnet build --project $(System.DefaultWorkingDirectory) --configuration=$(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
 
