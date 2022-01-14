@@ -13,6 +13,13 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+
 - script: dotnet build --project $(System.DefaultWorkingDirectory) --configuration=$(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
