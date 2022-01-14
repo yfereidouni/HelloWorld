@@ -23,9 +23,14 @@ steps:
 - script: echo $(System.DefaultWorkingDirectory)
 - script: echo ls -R $(System.DefaultWorkingDirectory)
 - script: echo $(Build.ArtifactStagingDirectory)
-- script: dotnet build --project ./HelloWorld.csproj --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-
+# - script: dotnet build --project ./HelloWorld.csproj --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
 
 - task: PublishBuildArtifacts@1
   displayName: Publishing Artifacts
