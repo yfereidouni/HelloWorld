@@ -13,9 +13,30 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+# - script: dotnet build --project 'yfereidouni/helloworld' --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+- script: echo $(environment) Job_01!
+- script: echo $(Build.BuildNumber)
+- script: echo $(Build.BuildId)
+- script: echo $(Build.SourceBranchName)
+- script: echo $(Build.SourceDirectory)
+- script: echo $(System.DefaultWorkingDirectory)
+- script: echo ls -R $(System.DefaultWorkingDirectory)
+- script: echo $(Build.ArtifactStagingDirectory)
+# - script: dotnet build --project ./HelloWorld.csproj --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
 
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: 
+    vsVersion: '6.0'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
 
 - task: PublishBuildArtifacts@1
   displayName: Publishing Artifacts
