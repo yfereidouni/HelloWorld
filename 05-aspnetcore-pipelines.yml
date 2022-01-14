@@ -14,13 +14,8 @@ variables:
 
 steps:
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(System.DefaultWorkingDirectory)'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-- script: dotnet build --project $(System.DefaultWorkingDirectory) --configuration=$(buildConfiguration)
+- script: dotnet build --project 'yfereidouni/helloworld' --configuration=$(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
 
